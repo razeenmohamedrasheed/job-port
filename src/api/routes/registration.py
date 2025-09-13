@@ -1,9 +1,13 @@
 from fastapi import APIRouter
-from models.registration import Recruiter
+from models.registration import Recruiter, Candidate
 from api.handler import registration
 
-router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post('/recruiter')
-def registeration(payload:Recruiter):
+def recruiter_registeration(payload: Recruiter):
     return registration.register_recruiter(payload)
+
+@router.post('/candidate')
+def candidate_registeration(payload: Candidate):
+    return registration.register_candidate(payload)
