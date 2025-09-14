@@ -46,3 +46,13 @@ class Database:
         except Error as e:
             print(f"Insert error: {e}")
             return None
+        
+    def get_user_by_email(self, email: str):
+        try:
+            query = "SELECT * FROM users WHERE email = %s"
+            print(f"Executing query: {query} with email={email}")
+            self.cur.execute(query, (email,))
+            return self.cur.fetchone()   
+        except Exception as e: 
+            print(f"DB error in get_user_by_email: {e}")
+            return None
