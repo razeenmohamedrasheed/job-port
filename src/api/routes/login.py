@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from models.registration import Login
 from api.handler import login
 
-router = APIRouter(prefix="/login", tags=["login"])
+router = APIRouter(prefix="/auth", tags=["login"])
 
 @router.post('/login')
 def recruiter_registeration(payload:Login):
