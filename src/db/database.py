@@ -2,13 +2,11 @@ import psycopg2
 from dotenv import load_dotenv
 from psycopg2 import sql, Error
 from datetime import datetime
+import psycopg2.extras
 import os
 
 
 load_dotenv()
-
-load_dotenv()
-
 class Database:
     def __init__(self):
         try:
@@ -21,6 +19,7 @@ class Database:
             )
             self.conn.autocommit = True
             self.cursor = self.conn.cursor()  
+            self.cursor = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
             print("Connected to PostgreSQL:", os.getenv("DB_NAME"))
         except Error as e:
             print("Error while connecting to PostgreSQL:", e)
@@ -50,9 +49,8 @@ class Database:
     def get_user_by_email(self, email: str):
         try:
             query = "SELECT * FROM users WHERE email = %s"
-            print(f"Executing query: {query} with email={email}")
-            self.cur.execute(query, (email,))
-            return self.cur.fetchone()   
+            self.cursor.execute(query, (email,))
+            return self.cursor.fetchone()   
         except Exception as e: 
             print(f"DB error in get_user_by_email: {e}")
             return None
