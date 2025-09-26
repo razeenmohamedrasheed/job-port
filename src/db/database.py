@@ -54,3 +54,13 @@ class Database:
         except Exception as e: 
             print(f"DB error in get_user_by_email: {e}")
             return None
+        
+    def select_query(self):
+        try:
+            query = "SELECT * FROM jobs"
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()  
+            return result
+        except Exception as e: 
+            print(f"DB error in get_user_by_email: {e}")
+            return None
